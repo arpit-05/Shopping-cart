@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import formalCurrency from '../util';
+import formatCurrency from '../util';
 class Product extends React.Component{
     constructor()
     {
@@ -17,9 +17,9 @@ class Product extends React.Component{
                     <p>{product.title}</p>
                 </a>
                 <div className="product-price">
-                    <div>{formalCurrency(product.price)}</div>
+                    <div>{formatCurrency(product.price)}</div>
                 </div>
-                <button className="button primary">Add to Cart</button>
+                <button className="button primary" onClick={()=>this.props.addToCart(product)}>Add to Cart</button>
             </div>
             </li>)})}
             </ul>
