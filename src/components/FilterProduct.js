@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
+import { filterProducts, sortProducts } from '../actions/productActions';
+import {connect} from 'react-redux'
 class FilterProduct extends React.Component{
     constructor(){
         super()
     }
     render(){
-        return(<div className="filter">
-            <div className="filter-result">{this.props.count} Product(s)</div>
+        
+        return !this.props.filteredProducts?<div>Loading...</div>:(<div className="filter">
+            <div className="filter-result">{this.props.filteredProducts.length} Product(s)</div>
             <div className="filter-sort">
                 Order {" "}
-                <select value={this.props.sort} onChange={this.props.sortProducts}>
+                <select value={this.props.sort} onChange={(e)=>this.props.sortProducts(this.props.filteredProducts,e.target.value)}>
                     <option>Latest</option>
                     <option value="lowest">Lowest</option>
                     <option value="highest">Highest</option>
                 </select>
             </div>
             <div className="filter-size">
-                <select value={this.props.size} onChange={this.props.filterProducts}>
+                <select value={this.props.size} onChange={(e)=>{this.props.filterProducts(this.props.products,e.target.value)}}>
                     <option value="">All</option>
                     <option value="XS">XS</option>
                     <option value="S">S</option>
@@ -28,4 +31,9 @@ class FilterProduct extends React.Component{
         </div>)
     }
 }
-export default FilterProduct;
+export default connect((state)=>({
+    size:state.products.size,
+    sort:state.products.sort,
+    products:state.products.items,
+    filteredProducts:state.products.filteredItems
+}),{filterProducts,sortProducts})(FilterProduct);
