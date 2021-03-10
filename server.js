@@ -6,15 +6,22 @@ const shortid = require("shortid");
 const app = express();
 app.use(bodyParser.json());
 
-app.use("/",express.static(__dirname+"/build"))
-app.use("/",(req,res)=>res.sendFile(__dirname+"/build/index.html"))
+// app.use("/", express.static(__dirname + "/build"));
+// app.get("/", (req, res) => res.sendFile(__dirname + "/build/index.html"));
+app.use('/', express.static("build"));
 
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  }); 
 
-mongoose.connect(process.env.MONGODB_URL||"mongodb://localhost/react-shopping-cart-db", {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URL||"mongodb://localhost/react-shopping-cart-db",
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const Product = mongoose.model(
   "products",
