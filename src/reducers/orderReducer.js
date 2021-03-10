@@ -1,0 +1,16 @@
+import { CLEAR_CART, CLEAR_ORDER, CREATE_ORDER, FETCH_ORDERS } from "../types";
+const orderReducer = (state ={}, action,getState) => {
+  switch (action.type) {
+    case CREATE_ORDER:
+      return { order: action.payload };
+    case CLEAR_ORDER:
+      return { order: null};
+     case CLEAR_CART:
+        return {};
+        case FETCH_ORDERS:
+            return {orders:action.payload}
+      default:
+          return state
+  }
+};
+export { orderReducer };

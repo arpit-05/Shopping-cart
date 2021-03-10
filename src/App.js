@@ -8,16 +8,11 @@ import FilterProduct from './components/FilterProduct';
 import Cart from './components/Cart';
 import store from './store'
 import {Provider} from 'react-redux'
+import {BrowserRouter,Link,Route} from "react-router-dom"
+import HomeScreen from './screens/HomeScreen';
+import AdminScreen from './screens/AdminScreen';
 class App extends React.Component{
-  constructor(){
-    super();
-    this.state={
-      products:data.products,
-      size:"",
-      sort:"",
-      cartItems:localStorage.getItem("cartItems")?JSON.parse(localStorage.getItem('cartItems')):[]
-    }
-  }
+  
  
   
   
@@ -27,23 +22,22 @@ class App extends React.Component{
     }
   render(){
     return (
+      <BrowserRouter>
       <Provider store={store}>
       <div className="grid-container">
        <header>
-         <a href='/'>Shopping Cart</a>
+         <Link to='/'>Shopping Cart</Link>
+         <Link to='/admin'>Admin</Link>
        </header>
        <main>
-        <div className='content'>
-        <div className='main'>
-          <FilterProduct></FilterProduct>
-          <Product ></Product></div>
-        <div className='sidebar'><Cart   createOrder={this.createOrder}></Cart></div>
-        </div>
+         <Route path='/admin' component={AdminScreen}></Route>
+         <Route path='/' component={HomeScreen} exact></Route>
+        
        </main>
        <footer>
          All rights are reserved.
        </footer>
-      </div></Provider>
+      </div></Provider></BrowserRouter>
     );
   }
   
